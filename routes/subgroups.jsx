@@ -18,4 +18,22 @@ router.get("/", async (req, res) => {
   }
 });
 
+
+// POST a new subgroup
+router.post("/", async (req, res) => {
+  const { subgroup_name, group_id } = req.body;
+  try {
+    const result = await pool.query(
+      "INSERT INTO SubGroups (subgroup_name, group_id) VALUES ($1, $2) RETURNING *",
+      [subgroup_name, group_id]
+    );
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+
 module.exports = router;
+

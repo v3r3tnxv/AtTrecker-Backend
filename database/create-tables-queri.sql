@@ -28,8 +28,10 @@ CREATE TABLE IF NOT EXISTS Lesson_Types (
 
 CREATE TABLE IF NOT EXISTS Statuses (
     status_id SERIAL PRIMARY KEY,
-    status_name VARCHAR(255) NOT NULL
+    status_name VARCHAR(255) NOT NULL,
+    status_short_name VARCHAR(50)
 );
+
 
 CREATE TABLE IF NOT EXISTS Subjects (
     subject_id SERIAL PRIMARY KEY,
@@ -40,16 +42,12 @@ CREATE TABLE IF NOT EXISTS Teachers (
     teacher_id SERIAL PRIMARY KEY,
     teacher_surname VARCHAR(50) NOT NULL,
     teacher_name VARCHAR(50) NOT NULL,
-    teacher_patronymic VARCHAR(50) NOT NULL,
-    user_id INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+    teacher_patronymic VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Groups (
     group_id SERIAL PRIMARY KEY,
-    group_name VARCHAR(50) NOT NULL,
-    user_id INT NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES Users(user_id)
+    group_name VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS SubGroups (
