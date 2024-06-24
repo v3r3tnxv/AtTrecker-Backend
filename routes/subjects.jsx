@@ -1,5 +1,3 @@
-// routes/subjects.js
-
 const express = require("express");
 const pool = require("../db");
 const router = express.Router();
@@ -23,6 +21,20 @@ router.post("/", async (req, res) => {
       subject_name,
     ]);
     res.json(result.rows[0]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// DELETE subjects
+router.delete("/", async (req, res) => {
+  const { ids } = req.body;
+  try {
+    const result = await pool.query("DELETE FROM subjects WHERE subject_id = ANY($1) RETURNING *", [
+      ids,
+    ]);
+    res.json(result.rows);
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Internal server error" });

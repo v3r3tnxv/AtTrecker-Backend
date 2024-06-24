@@ -30,4 +30,18 @@ router.post("/", async (req, res) => {
   }
 });
 
+// DELETE students
+router.delete("/", async (req, res) => {
+  const { ids } = req.body;
+  try {
+    const result = await pool.query("DELETE FROM Students WHERE student_id = ANY($1) RETURNING *", [
+      ids,
+    ]);
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 module.exports = router;
